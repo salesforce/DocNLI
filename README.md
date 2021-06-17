@@ -5,12 +5,14 @@ This repo contains the **data**, **source code**, and **pretrained (DocNLI) mode
 * Transformer: pip install transformers
 * Pytorch: conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
 
-##DocNLI Dataset download
+## DocNLI Dataset download
 
-Available from Google drive: https://drive.google.com/file/d/1Czv95ZfoeGXwGKWKF2hACIqKYOr4-I2b/view?usp=sharing
+https://drive.google.com/file/d/1Czv95ZfoeGXwGKWKF2hACIqKYOr4-I2b/view?usp=sharing
 
-##Pretrained RoBERTa Model download
+## Pretrained RoBERTa Model download
 
-Available from Google drive: https://drive.google.com/file/d/1rQhZxbuuK-pQ6ScM-bMd2QvJQHZypOCN/view?usp=sharing
+https://drive.google.com/file/d/1rQhZxbuuK-pQ6ScM-bMd2QvJQHZypOCN/view?usp=sharing
 
-##Contact: Wenpeng Yin (mr.yinwenpeng@gmail.com or wyin@salesforce.com)
+## Contact:
+
+Wenpeng Yin (mr.yinwenpeng@gmail.com or wyin@salesforce.com)
