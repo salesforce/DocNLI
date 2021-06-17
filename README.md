@@ -7,16 +7,16 @@ This repo contains the **data**, **source code**, and **pretrained (DocNLI) mode
 
 ## DocNLI Dataset download
 
-https://drive.google.com/file/d/1Czv95ZfoeGXwGKWKF2hACIqKYOr4-I2b/view?usp=sharing
+https://drive.google.com/file/d/16TZBTZcb9laNKxIvgbs5nOBgq3MhND5s/view?usp=sharing
 
-**In addition to the DocNLI dataset, we also release other three datasets (in "Data" folder) used in this paper:** 
+**In addition to the DocNLI dataset, we also release other three datasets (in "Data" folder) used in this paper:**
 * "binary FEVER data for NLI"
 * "binary MNLI"
 * "NLI-version of MCTest".
 
 ## Pretrained RoBERTa Model download
 
-https://drive.google.com/file/d/1rQhZxbuuK-pQ6ScM-bMd2QvJQHZypOCN/view?usp=sharing
+https://drive.google.com/file/d/12kNONo0jgktxU0vWtV3Z2ZrCrB3DJPVj/view?usp=sharing
 
 ## Contact:
 
