@@ -41,8 +41,7 @@ logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(name)s -   %(messa
                     level = logging.INFO)
 logger = logging.getLogger(__name__)
 
-# from pytorch_transformers.modeling_bert import BertPreTrainedModel, BertModel
-# import torch.nn as nn
+
 
 bert_hidden_dim = 1024
 pretrain_model_dir = 'roberta-large' #'roberta-large' , 'roberta-large-mnli', 'bert-large-uncased'
@@ -484,74 +483,16 @@ def main():
     random.shuffle(dev_and_test_examples)
     dev_examples = dev_and_test_examples[:-10000]
     test_examples = dev_and_test_examples[-10000:]
-    # print('test_examples size:', len(test_examples))
-
-    #['DUC', 'Curation', 'CNNDailyMail', 'SQUAD', 'ANLI']
-    # print('args.data_label:', args.data_label)
-    # train_examples = load_harsh_data('train', args.data_label.split(),  hypo_only=False)
-
     label_list = ["entailment", "not_entailment"]#, "contradiction"]
     num_labels = len(label_list)
     print('num_labels:', num_labels,  'dev size:', len(dev_examples), ' test size:', len(test_examples))
 
-    # num_train_optimization_steps = None
-    # num_train_optimization_steps = int(
-    #     len(train_examples) / args.train_batch_size / args.gradient_accumulation_steps) * args.num_train_epochs
-    # if args.local_rank != -1:
-    #     num_train_optimization_steps = num_train_optimization_steps // torch.distributed.get_world_size()
-    # device = torch.device('cpu')
     model = RobertaForSequenceClassification(num_labels)
     tokenizer = RobertaTokenizer.from_pretrained(pretrain_model_dir, do_lower_case=args.do_lower_case)
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_3.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_3.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_1.pt', map_location=device))
-
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_1.pt', map_location=device))
-
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_epoch_4.pt', map_location=device))
-    model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/MNLI_binary_epoch_0.pt', map_location=device))
+    model.load_state_dict(torch.load('DocNLI.pretrained.RoBERTA.model.pt', map_location=device))
 
     model.to(device)
 
-
-
-
-    '''load dev set'''
-    dev_features = convert_examples_to_features(
-        dev_examples, label_list, args.max_seq_length, tokenizer, output_mode,
-        cls_token_at_end=False,#bool(args.model_type in ['xlnet']),            # xlnet has a cls token at the end
-        cls_token=tokenizer.cls_token,
-        cls_token_segment_id=0,#2 if args.model_type in ['xlnet'] else 0,
-        sep_token=tokenizer.sep_token,
-        sep_token_extra=True,#bool(args.model_type in ['roberta']),           # roberta uses an extra separator b/w pairs of sentences, cf. github.com/pytorch/fairseq/commit/1684e166e3da03f5b600dbb7855cb98ddfcd0805
-        pad_on_left=False,#bool(args.model_type in ['xlnet']),                 # pad on the left for xlnet
-        pad_token=tokenizer.convert_tokens_to_ids([tokenizer.pad_token])[0],
-        pad_token_segment_id=0)#4 if args.model_type in ['xlnet'] else 0,)
-
-    dev_all_input_ids = torch.tensor([f.input_ids for f in dev_features], dtype=torch.long)
-    dev_all_input_mask = torch.tensor([f.input_mask for f in dev_features], dtype=torch.long)
-    dev_all_segment_ids = torch.tensor([f.segment_ids for f in dev_features], dtype=torch.long)
-    dev_all_label_ids = torch.tensor([f.label_id for f in dev_features], dtype=torch.long)
-
-    dev_data = TensorDataset(dev_all_input_ids, dev_all_input_mask, dev_all_segment_ids, dev_all_label_ids)
-    dev_sampler = SequentialSampler(dev_data)
-    dev_dataloader = DataLoader(dev_data, sampler=dev_sampler, batch_size=args.eval_batch_size)
 
 
     '''load test set'''

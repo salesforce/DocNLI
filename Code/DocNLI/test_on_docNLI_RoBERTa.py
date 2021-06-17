@@ -35,15 +35,14 @@ from transformers.models.roberta.modeling_roberta import RobertaModel#RobertaFor
 p = os.path.abspath('../')
 if p not in sys.path:
     sys.path.append(p)
-from load_data import load_DocNLI, load_test_data
+from load_data import load_DocNLI
 
 logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt = '%m/%d/%Y %H:%M:%S',
                     level = logging.INFO)
 logger = logging.getLogger(__name__)
 
-# from pytorch_transformers.modeling_bert import BertPreTrainedModel, BertModel
-# import torch.nn as nn
+
 
 bert_hidden_dim = 1024
 pretrain_model_dir = 'roberta-large' #'roberta-large' , 'roberta-large-mnli', 'bert-large-uncased'
@@ -480,9 +479,7 @@ def main():
     processor = processors[task_name]()
     output_mode = output_modes[task_name]
 
-    test_examples = load_DocNLI('dev', hypo_only=False)
-    random.shuffle(test_examples)
-    test_examples = test_examples[:10000]
+    test_examples = load_DocNLI('test', hypo_only=False)
 
     label_list = ["entailment", "not_entailment"]#, "contradiction"]
     num_labels = len(label_list)
@@ -491,29 +488,8 @@ def main():
     # device = torch.device('cpu')
     model = RobertaForSequenceClassification(num_labels)
     tokenizer = RobertaTokenizer.from_pretrained(pretrain_model_dir, do_lower_case=args.do_lower_case)
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_epoch_3.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_epoch_3.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_epoch_2.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_1.pt', map_location=device))
+    model.load_state_dict(torch.load('DocNLI.pretrained.RoBERTA.model.pt', map_location=device))
 
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_epoch_0.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_epoch_1.pt', map_location=device))
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_0.pt', map_location=device))
-    model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/ANLI_CNNDailyMail_DUC_Curation_SQUAD_epoch_1.pt', map_location=device))
-
-    # model.load_state_dict(torch.load('/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021/160k_ANLI_epoch_4.pt', map_location=device))
     model.to(device)
 
 
@@ -578,8 +554,8 @@ def evaluation(dev_dataloader, device, model):
 
     gold_label_ids = gold_label_ids
     assert len(pred_label_ids) == len(gold_label_ids)
-    print('gold_label_ids:', gold_label_ids)
-    print('pred_label_ids:', pred_label_ids)
+    # print('gold_label_ids:', gold_label_ids)
+    # print('pred_label_ids:', pred_label_ids)
     f1 = f1_score(gold_label_ids, pred_label_ids, pos_label= 0, average='binary')
     return f1
 

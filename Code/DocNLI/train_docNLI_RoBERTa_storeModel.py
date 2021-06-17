@@ -34,15 +34,15 @@ from transformers.models.roberta.modeling_roberta import RobertaModel#RobertaFor
 p = os.path.abspath('../')
 if p not in sys.path:
     sys.path.append(p)
-from load_data import load_harsh_data
+
+from load_data import load_DocNLI
 
 logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt = '%m/%d/%Y %H:%M:%S',
                     level = logging.INFO)
 logger = logging.getLogger(__name__)
 
-# from pytorch_transformers.modeling_bert import BertPreTrainedModel, BertModel
-# import torch.nn as nn
+
 
 bert_hidden_dim = 1024
 pretrain_model_dir = 'roberta-large' #'roberta-large' , 'roberta-large-mnli', 'bert-large-uncased'
@@ -480,9 +480,7 @@ def main():
     output_mode = output_modes[task_name]
 
 
-    #['DUC', 'Curation', 'CNNDailyMail', 'SQUAD', 'ANLI']
-    print('args.data_label:', args.data_label)
-    train_examples = load_harsh_data('train', args.data_label.split(),  hypo_only=False)
+    train_examples = load_DocNLI('train', hypo_only=False)
 
     label_list = ["entailment", "not_entailment"]#, "contradiction"]
     num_labels = len(label_list)
@@ -580,7 +578,7 @@ def main():
             model_to_save = (
                 model.module if hasattr(model, "module") else model
             )  # Take care of distributed/parallel training
-            store_transformers_models(model_to_save, tokenizer, '/export/home/Dataset/BERT_pretrained_mine/paragraph_entail/2021',  '160k_'+'_'.join(args.data_label.split())+'_epoch_'+str(epoch_i)+'.pt')
+            store_transformers_models(model_to_save, tokenizer, 'model_epoch_'+str(epoch_i)+'.pt')
 
 
 

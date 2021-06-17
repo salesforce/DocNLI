@@ -25,12 +25,10 @@ from tqdm import tqdm, trange
 from scipy.stats import beta
 from torch.nn import CrossEntropyLoss, MSELoss
 from scipy.special import softmax
-# from scipy.stats import pearsonr, spearmanr
-# from sklearn.metrics import matthews_corrcoef, f1_score
 
 from transformers.models.longformer.tokenization_longformer import LongformerTokenizer as RobertaTokenizer
 from transformers.optimization import AdamW
-from transformers.models.longformer.modeling_longformer import LongformerModel as RobertaModel#RobertaForSequenceClassification
+from transformers.models.longformer.modeling_longformer import LongformerModel as RobertaModel
 
 
 p = os.path.abspath('../')
@@ -43,8 +41,6 @@ logging.basicConfig(format = '%(asctime)s - %(levelname)s - %(name)s -   %(messa
                     level = logging.INFO)
 logger = logging.getLogger(__name__)
 
-# from pytorch_transformers.modeling_bert import BertPreTrainedModel, BertModel
-# import torch.nn as nn
 
 bert_hidden_dim = 768
 pretrain_model_dir = 'allenai/longformer-base-4096' #'roberta-large' , 'roberta-large-mnli', 'bert-large-uncased'
@@ -565,12 +561,10 @@ def main():
                 global_step += 1
                 iter_co+=1
 
-            '''
-            start evaluate on dev set after this epoch
-            '''
-            model.eval()
+
 
             '''store the model'''
+            model.eval()
             model_to_save = (
                 model.module if hasattr(model, "module") else model
             )  # Take care of distributed/parallel training

@@ -1,6 +1,9 @@
 # DocNLI: A Large-scale Dataset for Document-level Natural Language Inference
 
-This repo contains the data and source code for ACL'21 paper.
+This repo contains the **data**, **source code**, and **pretrained (DocNLI) model** for ACL'21 paper.
 ## Requirements
 * Transformer: pip install transformers
 * Pytorch: conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
+
+##DocNLI Dataset download
+Available from Google drive: https://drive.google.com/file/d/1Czv95ZfoeGXwGKWKF2hACIqKYOr4-I2b/view?usp=sharing
