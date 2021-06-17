@@ -2,8 +2,8 @@
 
 This repo contains the **data**, **source code**, and **pretrained (DocNLI) model** for ACL'21 paper.
 ## Requirements
-* Transformer: pip install transformers
-* Pytorch: conda install pytorch torchvision torchaudio cudatoolkit=11.0 -c pytorch
+* HuggingFace Transformer
+* Pytorch
 
 ## DocNLI Dataset download
 
