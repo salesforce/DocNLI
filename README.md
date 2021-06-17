@@ -9,7 +9,7 @@ This repo contains the **data**, **source code**, and **pretrained (DocNLI) mode
 
 https://drive.google.com/file/d/1Czv95ZfoeGXwGKWKF2hACIqKYOr4-I2b/view?usp=sharing
 
-**In addition to the DocNLI dataset, we also release other three datasets used in this paper:** 
+**In addition to the DocNLI dataset, we also release other three datasets (in "Data" folder) used in this paper:** 
 * "binary FEVER data for NLI"
 * "binary MNLI"
 * "NLI-version of MCTest".
